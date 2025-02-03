@@ -14,6 +14,6 @@ use Modules\Tag\Http\Controllers\TagController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('tag', TagController::class)->names('tag');
-});
+// Route::group([], function () {
+//     Route::resource('tag', TagController::class)->names('tag');
+// });
