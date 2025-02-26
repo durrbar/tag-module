@@ -12,9 +12,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tags', function (Blueprint $table) {
-            $table->id();
-            
+            $table->uuid('id')->primary();
+
+            $table->json('name');
+            $table->json('slug');
+            $table->string('type', 125)->nullable();
+            $table->integer('order_column')->nullable();
+
             $table->timestamps();
+        });
+
+        Schema::create('taggables', function (Blueprint $table) {
+            $table->foreignUuid('tag_id')->constrained()->cascadeOnDelete();
+
+            $table->uuidMorphs('taggable');
+
+            $table->unique(['tag_id', 'taggable_id', 'taggable_type']);
         });
     }
 
@@ -24,5 +37,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('tags');
+        Schema::dropIfExists('taggables');
     }
 };
