@@ -10,6 +10,9 @@
     ],
     "homepage": "https://github.com/durrbar/tag-module",
     "license": "MIT",
+    "require": {
+        "spatie/laravel-tags": "^4.6"
+    },
     "extra": {
         "laravel": {
             "providers": [],
