@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Role\Enums\Permission;
 use Modules\Tag\Http\Controllers\TagController;
 
 /*
@@ -14,6 +15,17 @@ use Modules\Tag\Http\Controllers\TagController;
 |
 */
 
-// Route::group([], function () {
-//     Route::resource('tag', TagController::class)->names('tag');
-// });
+Route::apiResource('tags', TagController::class, [
+    'only' => ['index', 'show'],
+]);
+
+/**
+ * *****************************************
+ * Authorized Route for Super Admin only
+ * *****************************************
+ */
+Route::group(['middleware' => ['permission:'.Permission::SUPER_ADMIN, 'auth:sanctum']], function (): void {
+    Route::apiResource('tags', TagController::class, [
+        'only' => ['store', 'update', 'destroy'],
+    ]);
+});
