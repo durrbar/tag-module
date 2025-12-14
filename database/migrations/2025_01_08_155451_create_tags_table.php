@@ -21,12 +21,12 @@ return new class () extends Migration {
             $table->timestamps();
         });
 
-        Schema::create('taggables', function (Blueprint $table): void {
-            $table->foreignUuid('tag_id')->constrained()->cascadeOnDelete();
+        Schema::create('old_taggables', function (Blueprint $table): void {
+            $table->foreignUuid('old_tag_id')->constrained()->cascadeOnDelete();
 
             $table->uuidMorphs('taggable');
 
-            $table->unique(['tag_id', 'taggable_id', 'taggable_type']);
+            $table->unique(['old_tag_id', 'taggable_id', 'taggable_type']);
         });
     }
 
@@ -35,7 +35,7 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('tags');
-        Schema::dropIfExists('taggables');
+        Schema::dropIfExists('old_taggables');
+        Schema::dropIfExists('old_tags');
     }
 };
