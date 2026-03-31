@@ -24,7 +24,7 @@ class TagResource extends Resource
             'details' => $this->details,
             'image' => $this->image,
             'icon' => $this->icon,
-            'type' => getResourceData($this->type, []), // if you need extra data then pass key in array by second parameter
+            'type' => $this->whenLoaded('type', fn () => getResourceData($this->type, [])), // if you need extra data then pass key in array by second parameter
         ];
     }
 }
