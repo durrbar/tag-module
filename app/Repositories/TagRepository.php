@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Tag\Repositories;
 
+use Illuminate\Http\Request;
 use Modules\Core\Repositories\BaseRepository;
 use Modules\Tag\Models\Tag;
 use Prettus\Repository\Criteria\RequestCriteria;
@@ -30,7 +31,7 @@ class TagRepository extends BaseRepository
         'language',
     ];
 
-    public function boot()
+    public function boot(): void
     {
         try {
             $this->pushCriteria(app(RequestCriteria::class));
@@ -42,12 +43,12 @@ class TagRepository extends BaseRepository
     /**
      * Configure the Model
      **/
-    public function model()
+    public function model(): string
     {
         return Tag::class;
     }
 
-    public function updateTag($request, $tag)
+    public function updateTag(Request $request, Tag $tag): Tag
     {
         $data = $request->only($this->dataArray);
         if (! empty($request->slug) && $request->slug !== $tag['slug']) {
