@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Tag\Database\Factories;
 
-use Modules\Tag\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\Tag\Models\Tag;
 
 class TagFactory extends Factory
 {

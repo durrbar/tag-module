@@ -1,8 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Tag\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Attributes\Appends;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Attributes\Table;
+use Illuminate\Database\Eloquent\Attributes\Unguarded;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
@@ -12,21 +18,14 @@ use Modules\Ecommerce\Models\Product;
 use Modules\Ecommerce\Models\Type;
 use Modules\Ecommerce\Traits\TranslationTrait;
 
+#[Table('tags')]
+#[Unguarded]
+#[Appends(['translated_languages'])]
 class Tag extends Model
 {
     use HasUuids;
     use Sluggable;
     use TranslationTrait;
-
-    protected $table = 'tags';
-
-    public $guarded = [];
-
-    protected $appends = ['translated_languages'];
-
-    protected $casts = [
-        'image' => 'json',
-    ];
 
     /**
      * Return the sluggable configuration array for this model.
@@ -40,7 +39,8 @@ class Tag extends Model
         ];
     }
 
-    public function scopeWithUniqueSlugConstraints(Builder $query, Model $model): Builder
+    #[Scope]
+    public function withUniqueSlugConstraints(Builder $query, Model $model): Builder
     {
         return $query->where('language', $model->language);
     }
@@ -53,5 +53,12 @@ class Tag extends Model
     public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class, 'product_tag');
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'image' => 'json',
+        ];
     }
 }

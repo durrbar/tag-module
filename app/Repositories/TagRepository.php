@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Tag\Repositories;
 
 use Modules\Core\Repositories\BaseRepository;
@@ -48,7 +50,7 @@ class TagRepository extends BaseRepository
     public function updateTag($request, $tag)
     {
         $data = $request->only($this->dataArray);
-        if (! empty($request->slug) && $request->slug != $tag['slug']) {
+        if (! empty($request->slug) && $request->slug !== $tag['slug']) {
             $data['slug'] = $this->makeSlug($request);
         }
         $tag->update($data);
