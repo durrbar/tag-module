@@ -24,7 +24,7 @@ Route::apiResource('tags', TagController::class, [
  * Authorized Route for Super Admin only
  * *****************************************
  */
-Route::group(['middleware' => ['permission:'.Permission::SUPER_ADMIN, 'auth:sanctum']], function (): void {
+Route::group(['middleware' => ['permission:'.Permission::SuperAdmin->value, 'auth:sanctum']], function (): void {
     Route::apiResource('tags', TagController::class, [
         'only' => ['store', 'update', 'destroy'],
     ]);
