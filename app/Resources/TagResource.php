@@ -12,7 +12,7 @@ class TagResource extends JsonResource
     /**
      * Transform the resource into an array.
      */
-    public function toArray(Request $request): string
+    public function toArray(Request $request): mixed
     {
         return $this->name;
     }
