@@ -15,7 +15,7 @@ class TagCreateRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -25,7 +25,7 @@ class TagCreateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => ['required', 'string'],
@@ -43,7 +43,7 @@ class TagCreateRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [
             'name.required' => 'Name field is required',
@@ -55,7 +55,7 @@ class TagCreateRequest extends FormRequest
         ];
     }
 
-    public function failedValidation(Validator $validator)
+    public function failedValidation(Validator $validator): void
     {
         throw new HttpResponseException(response()->json($validator->errors(), 422));
     }
